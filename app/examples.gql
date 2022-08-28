@@ -1,0 +1,52 @@
+query GetMessages {
+  messages(channelId:1){
+        id
+        title
+        content
+        channel{
+          id
+          name
+        }
+        createdAt
+    }
+}
+
+query GetMessages {
+  messages(channelId:1, page:1){
+      id
+      title
+      content
+      channel{
+        id
+        name
+      }
+      createdAt
+  }
+}
+
+query getChannels {
+  channels{
+        id
+        name
+    }
+}
+
+mutation createChannel {
+  createChannel(channelInput: { name: "channel 1" }) {
+    id
+    name
+  }
+}
+
+mutation writeMessage {
+  writeMessage(messageInput: { title: "message 12", channelId:1, content:"message content" }) {
+    id
+    title
+    channel{
+      id
+      name
+    }
+    content
+    createdAt
+  }
+}

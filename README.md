@@ -1,16 +1,26 @@
-# how to run
+# How to install
 
-(1)、dev environment
-  1、install mysql
-  2、change your mysql configure file "ormconfig.json"
-  3、at app root dir run "yarn && yarn start"
-(2)、product environment
-  1、on terminal run "docker-compose up -d"
-  2、visit "http://localhost:4000/"
+### In the dev environment  
+  - install mysql.  
+  - change your mysql configure file "ormconfig.json".  
+  - go to the APP folder and run "yarn && yarn start".  
+### In the product environment  
+  - install docker and docker-compose.
+  - execute the command "docker-compose up -d" in the root directory.
+  - open "http://localhost:4000/" in browser and test api.
+
+# How to run uni-test  
+ go to the APP folder and run "yarn && yarn test".  
 
 
+# Test Api 
+open "http://localhost:4000/" in browser.   
+enter the following code in the left area and execute.  
 
-# list all channel
+      
+
+## Test code
+### List all channel
 ```
 {
     channels{
@@ -20,7 +30,7 @@
 }
 ```
 
-# list message
+### List message
 ```
 {
     messages(channelId:1){
@@ -36,7 +46,7 @@
 }
 ```
 
-# pagination
+### Pagination
 ```
 {
  messages(channelId:1, page:1){
@@ -52,7 +62,7 @@
 }
 ```
 
-# create a channel.
+### Create a channel.
 ```
 mutation {
   createChannel(channelInput: { name: "channel 1" }) {
@@ -62,7 +72,7 @@ mutation {
 }
 ```
 
-# create a message.
+### Create a message.
 ```
 mutation {
   writeMessage(messageInput: { title: "message 12", channelId:1, content:"message content" }) {

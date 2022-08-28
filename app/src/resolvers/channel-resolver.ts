@@ -1,7 +1,6 @@
-import { Message } from './../entities/message';
 import { Channel } from './../entities/channel';
 import { Resolver, Query, FieldResolver, Arg, Root, Mutation, Ctx, Int } from "type-graphql";
-import { Repository } from "typeorm";
+import { getRepository, Repository } from "typeorm";
 import { InjectRepository } from "typeorm-typedi-extensions";
 
 import { ChannelInput } from "./types/channel-input";
@@ -10,7 +9,9 @@ import { ChannelInput } from "./types/channel-input";
 export class ChannelResolver {
     constructor(
         @InjectRepository(Channel) private readonly channelRepository: Repository<Channel>,
-    ) { }
+    ) {
+        this.channelRepository = getRepository(Channel)
+    }
 
 
     @Query(returns => [Channel], { nullable: true })
@@ -23,10 +24,10 @@ export class ChannelResolver {
 
     @Mutation(returns => Channel)
     async createChannel(
-        @Arg("channelInput") channelInput: ChannelInput
+        @Arg("channelInput") { name }: ChannelInput
     ): Promise<Channel> {
         const channel = this.channelRepository.create({
-            ...channelInput
+            name: name
         });
         await this.channelRepository.save(channel);
         return channel;

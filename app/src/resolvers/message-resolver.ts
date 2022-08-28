@@ -1,7 +1,7 @@
 import { Message } from '../entities/message';
 import { Channel } from '../entities/channel';
 import { Resolver, Query, FieldResolver, Arg, Root, Mutation, Ctx, Int } from "type-graphql";
-import { Repository } from "typeorm";
+import { getRepository, Repository } from "typeorm";
 import { InjectRepository } from "typeorm-typedi-extensions";
 
 import { MessageInput } from "./types/message-input";
@@ -11,7 +11,10 @@ export class MessageResolver {
     constructor(
         @InjectRepository(Channel) private readonly channelRepository: Repository<Channel>,
         @InjectRepository(Message) private readonly messageRepository: Repository<Message>,
-    ) { }
+    ) {
+        this.channelRepository = getRepository(Channel)
+        this.messageRepository = getRepository(Message)
+    }
 
     @Query(returns => [Message], { nullable: true })
     messages(
